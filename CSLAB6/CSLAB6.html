@@ -10,12 +10,16 @@
     <p id="content"></p>
 
     <input type="text" id="name" placeholder="Enter your name">
-    <button onclick="hello()">Submit</button>
+    <button onclick="hello(), closeMessage()">Submit</button>
 
     <script>
         function hello(){
             let name = document.getElementById("name").value;
             document.getElementById("content").textContent="Hello " + name;
+        }
+
+        function closeMessage(){
+            alert("Bye");
         }
     </script>
 
