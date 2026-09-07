@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>CSLAB 6</title>
+</head>
+
+<body>
+    <p id="content"></p>
+
+    <input type="text" id="name" placeholder="Enter your name">
+    <button onclick="hello(), closeMessage()">Submit</button>
+
+    <script>
+        function hello(){
+            let name = document.getElementById("name").value;
+            document.getElementById("content").textContent="Hello " + name;
+        }
+
+        function closeMessage(){
+            alert("Bye");
+        }
+    </script>
+
+
+    <!--img src = "angru.png" id="image" alt="angru">
+
+    <button onclick="document.getElementById('image').src='angru.png', Angwu()">Angwy</button>
+    <button onclick="document.getElementById('image').src='Happu.png', Happu()">Happu</button>
+
+    <script>
+        function Angwu(){
+            alert("RAHHHHH! Im ANGWUUU");
+        }
+
+        function Happu(){
+            alert("Hi! Im Happu!");
+        }
+    </script> -->
+</body>
+
+</html>

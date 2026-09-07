@@ -1,0 +1,10 @@
+.my_image{
+    
+    width: 100%;
+    max-width: 1500px;
+    height: auto;
+
+    display: block;
+    margin: 30px auto;
+    border-radius: 10px;
+}
