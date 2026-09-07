@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Dun(Operator){
+            let num1 = document.getElementById("Score").value;
+            let num2 = document.getElementById("Total").value;
+
+            let answer = (num1 / num2) * 100;
+
+            if (answer >= 74){
+                document.getElementById("answer").textContent="You have passed!"
+            } else{
+                document.getElementById("answer").textContent="You have failed."
+            }
+        }
+
+        function Ran(Operator){
+            let num1 = document.getElementById("Score").value;
+            let num2 = document.getElementById("Total").value;
+            let answer = (num1 / num2) * 100;
+
+            if (answer >= 74){
+                document.getElementById("answer").textContent="You have passed!" + answer + "%";
+            } else{
+                document.getElementById("answer").textContent="You have failed." + answer + "%";
+            }
+        }
+
+
+    </script>
+
+    <p id ="answer"> Enter your score and the total score to get your grade.</p>
+    <input type = "text" id ="Score" placeholder="Enter your Score">
+    <input type = "text" id ="Total" placeholder="Enter the Total Score">
+    
+    <select id="peep">
+        <option id="Percent"> Percentage </option>
+        <option id="Pass"> Pass/Fail</option>
+    </select>
+    <button id="sub" onclick="Ran(document.getElementById(Percent))" onclick="Dun(document.getElementById(Pass))"" img src="ON.jpg">Submit</button>
+
+    <img src="OFF.jpg">
+</body>
+</html>
