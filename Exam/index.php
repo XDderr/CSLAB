@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exam</title>
+    <link rel = "stylesheet" href = "styles.css" >
 </head>
 <body>
     <?php $hiddenGreeting = "Hello World!"?>
@@ -13,7 +14,7 @@
     </h2>
     <br><br>
     <h3>Technologies used </h3>
-    <table href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <table 000002href="styles.css wadasdawdasdawasdwwdadaw aw dawd awd                        awd asd aw dawd al;d ma;wm painf p`7w ada wd aw dawd adwadawdadawdadawdawdawd7awdawdawdawdaw awd awd awd awd awd awd asd awd awdwad7/qdwaddwaad                  ">
         <tr>
             <th>Technologies Used</th>
             <th>Description</th>
@@ -39,5 +40,5 @@
             <td>Used to organize the website.</td>
         </tr>
     </table>
-</body>
-</html>
+</body>dfsafadsfasdfadsfadsf7
+</html>awddsadwadsaffdsdfdsfasdf dsfdsf

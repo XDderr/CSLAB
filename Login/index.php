@@ -1,89 +1,101 @@
 <?php
-session_start();
 
-//declare default credentials
-//$defaultUsername = "John123";
-//$defaultPassword = "password123";
-
-include ("db.php");
+include('db.php');
 
 $errors = [];
 
-//$message = "";
 
-if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-    $confirmPassword = $_POST["confirm_password"];
 
-    if (empty($username)){
+if ($_SERVER['REQUEST_METHOD'] == "POST") {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $confirmPassword = $_POST['confirm_password'];
+
+    if (empty($username)) {
         $errors[] = "Username is required";
-    } else if (strlen($username) < 8){
-        $errors[] = "Username must be 8 or more characters long";
+    } else if (strlen($username) < 8) {
+        $errors[] = "Username must be 8 characters or more";
     }
 
-    $result = pg_query_params($conn, 'SELECT * FROM users WHERE username = $1', [$username]);
-    $user - pg_getcg_assoc($result);
+    $usernamePattern = '/^(?=.*[\S])(?=.*[\s]).+$/';
 
-    if ($userCheck -> num_rows > 0){
-        $errors[] = "Username already exists.";
+    if (preg_match($usernamePattern, $username)) {
+        $errors[] = "Username must not have white space";
     }
 
-    $passwordPatter = '/^(?=.*[A-Z])(?=.*[a-z]?=.*[\W_]).{8,}$/';
+    // " ynzon salas "
 
-    if($password != $confirm_password){
-        $errors[]="Password did not match";
+    $result = pg_query_params($conn, 'SELECT username FROM users WHERE username = $1', [$username]);
+
+    if (pg_fetch_assoc($result)) {
+        $errors[] = "Username already exist";
     }
 
-    if(!preg_match($passwordPatter, $password)){
-        $errors[] = "Password must contain lower and upper case with number(s)";
+    if ($password != $confirmPassword) {
+        $errors[] = "Password did not match";
     }
 
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    if(empty($errors)){
-        $sql = "INSERT INTO `users` (`username`. `password`) VALUES ('$username', '$hashedPassword')";
-        $conn->query($sql);
-    }
+    if (empty($password) || empty($confirmPassword)) {
+        $errors[] = "Please provide a passsword";
     }
 
-    if($defaultUsername == $username && $defaultPassword == $password){
-        $_SESSION['username'] = $username;
+    $pattern = '/^(?=.*[A-Z])(?=.*[a-z])(?=.*[\W_]).+$/';
 
-        header("Location: dashboard.php");
-        exit();
-    } else {
-        $message = "Invalid Credentials";
+    if (!preg_match($pattern, $password)) {
+        $errors[] = "password must contain lower, upper case and special characters";
     }
+
+    if (strlen($password) < 8) {
+        $errors[] = "password must be 8 or more characters long";
+    }
+
+    $passwordHash = password_hash($password, PASSWORD_BCRYPT);
+
+    if (empty($errors)) {
+        pg_query_params(
+            $conn,
+            'INSERT INTO users (username, password) VALUES ($1, $2)',
+            [$username, $passwordHash]
+        );
+
+        echo "Registered Successfully";
+    }
+}
+
+
+
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 8</title>
+    <title>Document</title>
 </head>
-<body>
-    <h3>Login System </h3>
-    <form method="POST">
-    <label for = "username"> Enter username
-        <input type = "text" placeholder = "username" name = "username">
-</label>
-<br><br>
-<label for = "password"> Enter Password
-        <input type = "text" placeholder = "password" name = "password">
-</label>
 
-<button type = "submit"> Submit </button>
-</form>
-<p style="color: red">
-    <?php //echo $message;
-    foreach($errors as $error){
+<body>
+    <form method="POST">
+        <label for="username">Username:</label>
+        <input type="text" name="username" value="<?php echo (isset($_POST['username'])) ? $_POST['username'] : ""; ?>">
+        <br><br>
+        <label for="password">Password:[REDACTED]
+        <input type="password" name="password">
+        <br><br>
+        <label for="confirm password">Confirm Password:[REDACTED]
+        <input type="password" name="confirm_password">
+        <br><br>
+        <button type="submit">Register</button>
+    </form>
+    <br><br>
+    <a href="login.php">Login</a>
+    <?php
+
+    foreach ($errors as $error) {
         echo $error . "<br>";
     }
 
-
     ?>
-    
 </body>
+
 </html>
