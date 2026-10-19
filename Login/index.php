@@ -22,11 +22,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $errors[] = "Username must be 8 or more characters long";
     }
 
-    $sql = "SELECT `username` FROM `users` WHERE `username` = `$username`";
+    $result = pg_query_params($conn, 'SELECT * FROM users WHERE username = $1', [$username]);
+    $user - pg_getcg_assoc($result);
 
-    $userCheck = $conn->query($sql);
-
-    if ($userChecl -> num_rows > 0){
+    if ($userCheck -> num_rows > 0){
         $errors[] = "Username already exists.";
     }
 
@@ -47,14 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     }
 
-    //if($defaultUsername == $username && $defaultPassword == $password){
-        //$_SESSION['username'] = $username;
+    if($defaultUsername == $username && $defaultPassword == $password){
+        $_SESSION['username'] = $username;
 
-        //header("Location: dashboard.php");
-        //exit();
-    //} else {
-        //$message = "Invalid Credentials";
-    //}
+        header("Location: dashboard.php");
+        exit();
+    } else {
+        $message = "Invalid Credentials";
+    }
 ?>
 
 <!DOCTYPE html>
